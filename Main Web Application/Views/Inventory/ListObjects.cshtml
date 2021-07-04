@@ -1,0 +1,116 @@
+﻿@model IEnumerable<Main_Web_Application.Models.CollectionObject>
+@using Main_Web_Application.Models
+@{
+    ViewBag.Title = "List Collection Items";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div style="padding-top:30px;"></div>
+<h1 style="text-align:center;">Viewing Full Inventory</h1>
+<div style="padding-bottom:30px;"></div>
+<div class="row">
+    <div class="col-md-4 col-md-offset-8">
+        @{
+            using (Html.BeginForm("List", "Collection", FormMethod.Get))
+            {
+                <input id="searchString" name="searchString" type="text" class="form-control" style="float:left;" />
+                <input type="submit" class="btn btn-primary" style="float:left;" value="Search" />
+            }
+        }
+
+    </div>
+</div>
+<div style="padding-bottom:10px;"></div>
+<table class="table">
+    <tr>
+        <th>
+            @Html.ActionLink("Name", "List", "Collection", new { sortBy = "name" }, null)
+        </th>
+        <th>
+            @Html.ActionLink("Sold", "List", "Collection", new { sortBy = "sold" }, null)
+
+        </th>
+        <th>
+            @Html.ActionLink("Shipped", "List", "Collection", new { sortBy = "shipped" }, null)
+        </th>
+        <th>
+            @Html.ActionLink("Value", "List", "Collection", new { sortBy = "value" }, null)
+
+        </th>
+        <th>
+            @Html.ActionLink("Box", "List", "Collection", new { sortBy = "hasbox" }, null)
+
+        </th>
+        <th>
+            @Html.ActionLink("Shipper", "List", "Collection", new { sortBy = "hasshipper" }, null)
+
+        </th>
+        <th>
+            @Html.ActionLink("Condition", "List", "Collection", new { sortBy = "condition" }, null)
+
+        </th>
+        <th>
+            @Html.ActionLink("Manufacturer", "List", "Collection", new { sortBy = "manufacturer" }, null)
+
+        </th>
+        <th>
+            @Html.ActionLink("Genre", "List", "Collection", new { sortBy = "genre" }, null)
+
+        </th>
+        <th>
+            @Html.ActionLink("Type", "List", "Collection", new { sortBy = "type" }, null)
+
+        </th>
+        <th></th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Sold)
+            </td>
+            <td>
+                @if (item.DateShipped != null)
+                {
+                    <input type="checkbox" class=" " checked disabled />
+                }
+                else
+                {
+                    <input type="checkbox" class=" " disabled />
+                }
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EstimatedValue)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.HasBox)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.HasShipper)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Condition)
+            </td>
+            <td>
+                @item.Manufacturer.GetDisplayName()
+            </td>
+            <td>
+                @item.Genre.GetDisplayName()
+            </td>
+            <td>
+                @item.Type.GetDisplayName()
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", "Collection", new { id = item.Id }, null)
+            </td>
+            <td>
+                @Html.ActionLink("View", "View", "Collection", new { id = item.Id }, null)
+            </td>
+        </tr>
+    }
+
+</table>

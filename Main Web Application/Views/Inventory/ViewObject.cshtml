@@ -1,0 +1,224 @@
+﻿@model Main_Web_Application.Models.CollectionObject
+@using Main_Web_Application.Models
+@{
+    ViewBag.Title = "View Collection Item Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>View Collection Item Details</h2>
+
+<div>
+    <hr />
+
+    <div class="row">
+        <div class="col-md-8">
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.DateCreated)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.DateCreated)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Name)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Name)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Sold)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Sold)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.EstimatedValue)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.EstimatedValue)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.SoldValue)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.SoldValue)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Description)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Description)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.HasBox)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.HasBox)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.HasShipper)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.HasShipper)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Condition)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Condition)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Manufacturer)
+                </dt>
+
+                <dd>
+                    @Model.Manufacturer.GetDisplayName()
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Genre)
+                </dt>
+
+                <dd>
+                    @Model.Genre.GetDisplayName()
+
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Type)
+                </dt>
+
+                <dd>
+                    @Model.Type.GetDisplayName()
+
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.BuyerName)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.BuyerName)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.BuyerAddress)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.BuyerAddress)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.DateShipped)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.DateShipped)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.BuyerComments)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.BuyerComments)
+                </dd>
+            </dl>
+                @if (User.IsInRole("Admin"))
+                {
+                <fieldset>
+                    <legend>Commission Info</legend>
+                    <dl class="dl-horizontal">
+                        <dt>
+                            @Html.DisplayNameFor(model => model.CommissionPaid)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.CommissionPaid)
+                        </dd>
+                        <dt>
+                            @Html.DisplayNameFor(model => model.CommissionDate)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.CommissionDate)
+                        </dd>
+                        <dt>
+                            @Html.DisplayNameFor(model => model.CommissionComments)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.CommissionComments)
+                        </dd>
+                    </dl>
+                </fieldset>
+                }
+           
+
+        </div>
+        <div class="col-md-4">
+            <div class="row">
+                <div class="col-md-12">
+                    @if (ViewBag.FileUploadsucceeded != null && ViewBag.FileUploadsucceeded == true)
+                    {
+                        <label class="label-success">File Upload Succeeded!</label>
+                    }
+                    else if (ViewBag.FileUploadsucceeded != null && ViewBag.FileUploadsucceeded == false)
+                    {
+                        <label class="label-danger">File Upload Failed!</label>
+                    }
+                </div>
+            </div>
+            <div class="row">
+                @foreach (var image in Model.Images)
+                {
+                    <div class="col-md-4" style="padding-bottom:15px;">
+                        <a href="~/temp_images/@image.ImageUrl" target="_blank">
+                            <img src="~/temp_images/@image.ImageUrl" style="width:100%;" />
+                        </a>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-2">
+            <a href="~/Collection/List" class="btn btn-default">Back to Inventory</a>
+        </div>
+        <div class="col-md-2">
+           @Html.ActionLink("Edit", "Edit", "Collection", new { id = Model.Id }, new { @class = "btn btn-primary"})
+        </div>
+    </div>
+</div>
+
+@section styles{
+
+<style type="text/css">
+    dt{
+        padding-top:10px;
+    }
+    dd {
+        padding-top: 10px;
+    }
+</style>    
+    
+}

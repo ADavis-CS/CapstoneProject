@@ -1,0 +1,209 @@
+﻿@model Main_Web_Application.Models.ReportObjectModel
+@using System.Globalization
+@{
+    ViewBag.Title = "Report";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div style="margin-bottom:50px;"></div>
+<div class="row">
+    <div class="col-md-3">
+        <fieldset>
+            <legend>
+                Value Breakdown
+            </legend>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Total Estimated</th>
+                        <th>Total Sold</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>@Model.TotalEstimatedValueOfCollection.ToString("C2", CultureInfo.CurrentCulture)</td>
+                        <td>@Model.TotalSoldValueOfCollection.ToString("C2", CultureInfo.CurrentCulture)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </fieldset>
+        <fieldset>
+            <legend>
+                Misc Breakdown
+            </legend>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Total Shipped</th>
+                        <th>Need Shipping</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>@Model.TotalItemsShipped</td>
+                        <td>@Model.CollectionItemsNeedShipping.Count</td>
+                    </tr>
+                </tbody>
+            </table>
+        </fieldset>
+    </div>
+    <div class="col-md-3">
+        <fieldset>
+            <legend>
+                Sold Items Breakdown
+            </legend>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Total Items</th>
+                        <th>Items Sold</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>@Model.TotalCollectionItems</td>
+                        <td>@Model.TotalSoldCollectionItems</td>
+                    </tr>
+                </tbody>
+            </table>
+        </fieldset>
+    </div>
+    <div class="col-md-3">
+        <fieldset>
+            <legend>
+                Manufacturer Breakdown
+            </legend>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Manufacturer Name</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.ItemManufacturerBreakdown.Values.Distinct().ToList())
+                    {
+                        <tr>
+                            <td>@item.ToString()</td>
+                            <td>@Model.ItemManufacturerBreakdown.Count(x => x.Value == item.ToString())</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </fieldset>
+        <fieldset>
+            <legend>
+                Genre Breakdown
+            </legend>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Genre</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @foreach (var item in Model.ItemGenreBreakdown.Values.Distinct().ToList())
+                    {
+                        <tr>
+                            <td>@item.ToString()</td>
+                            <td>@Model.ItemGenreBreakdown.Count(x => x.Value == item.ToString())</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </fieldset>
+        <fieldset>
+            <legend>
+                Condition Breakdown
+            </legend>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Condition</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.ItemConditionBreakdown.Values.Distinct().ToList())
+                    {
+                        <tr>
+                            <td>@item.ToString()</td>
+                            <td>@Model.ItemConditionBreakdown.Count(x => x.Value == item.ToString())</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </fieldset>
+        <fieldset>
+            <legend>
+                Type Breakdown
+            </legend>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Type</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.ItemTypeBreakdown.Values.Distinct().ToList())
+                    {
+                        <tr>
+                            <td>@item.ToString()</td>
+                            <td>@Model.ItemTypeBreakdown.Count(x => x.Value == item.ToString())</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </fieldset>
+    </div>
+    <div class="col-md-3">
+        <fieldset>
+            <legend>
+                Items Need Shipment
+            </legend>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Item Name</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @foreach (var item in Model.CollectionItemsNeedShipping)
+                    {
+                        <tr>
+                            <td>@item.Name</td>
+                            <td>@Html.ActionLink("View", "View", "Collection", new { Id = item.Id }, null)</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </fieldset>
+        <fieldset>
+            <legend>
+                Items Need Images
+            </legend>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Item Name</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @foreach (var item in Model.ItemsWithoutImages)
+                    {
+                        <tr>
+                            <td>@item.Name</td>
+                            <td>@Html.ActionLink("View", "View", "Collection", new { Id = item.Id }, null)</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </fieldset>
+    </div>
+</div>

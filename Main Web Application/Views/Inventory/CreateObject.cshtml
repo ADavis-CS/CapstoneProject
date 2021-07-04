@@ -1,0 +1,97 @@
+﻿@model Main_Web_Application.Models.CollectionObject
+
+@{
+    ViewBag.Title = "Create New Collection Item";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Create New Collection Item</h2>
+
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+<div class="form-horizontal">
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group">
+        @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", autocomplete="OFF" } })
+            @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control", autocomplete = "OFF" } })
+            @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.HasBox, htmlAttributes: new { @class = "control-label col-md-2 cbControlLabel" })
+        <div class="col-md-10">
+            <div class="checkbox cbControlDiv">
+                @Html.EditorFor(model => model.HasBox, new { htmlAttributes = new { @class = "checkbox ", } })
+                @Html.ValidationMessageFor(model => model.HasBox, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.HasShipper, htmlAttributes: new { @class = "control-label col-md-2 cbControlLabel" })
+        <div class="col-md-10">
+            <div class="checkbox cbControlDiv">
+                @Html.EditorFor(model => model.HasShipper, new { htmlAttributes = new { @class = "checkbox ",  } })
+                @Html.ValidationMessageFor(model => model.HasShipper, "", new { @class = "text-danger", })
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Condition, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EnumDropDownListFor(model => model.Condition, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.Condition, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Manufacturer, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EnumDropDownListFor(model => model.Manufacturer, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.Manufacturer, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Genre, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EnumDropDownListFor(model => model.Genre, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.Genre, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Type, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EnumDropDownListFor(model => model.Type, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.Type, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Create" class="btn btn-default" />
+        </div>
+    </div>
+</div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
