@@ -3,7 +3,7 @@
 <h3 style="text-align:center !important;"> August 14th, 2021 </h3>
 
 <h4>DOWNLOAD PDF WITH IMAGES BELOW</h4>
-<a target="_blank" href="https://github.com/ADavis-CS/CapstoneProject/blob/main/docs/FINAL%20ASSIGNMENT%20COMPLETE%20SUBMISSION.pdf">FINAL ASSIGNMENT COMPLETE SUBMISSION PDF</a>
+<a target="_blank" href="https://github.com/ADavis-CS/CapstoneProject/raw/main/docs/FINAL%20ASSIGNMENT%20COMPLETE%20SUBMISSION.pdf">FINAL ASSIGNMENT COMPLETE SUBMISSION PDF</a>
 <br/><br/>
 <h4>Intro / Professional Self-Assessment</h4>
 
