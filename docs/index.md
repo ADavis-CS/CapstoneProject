@@ -79,7 +79,25 @@
   	I am very thankful that I can now be cognizant of the trade-offs between my design choices, and my selection of data types for a given application. This is one of the outcomes that is defined within the Computer Science program that I have definitely realized. I can not think of any apparent gaps within the coursework and its applicability, however one thing I have noticed, is that the coursework focuses a lot on the fundamentals of computer science, which is definitely important, and less on different technologies such as the .Net framework. Different frameworks may obscure a lot of the underlying plumbing to programmers, such as using different Data Structures within its native type system. So, it makes it slightly challenging to see how the different frameworks are implementing the data structures within their types, and which one is the best to select for a particular use case. I am happy I was able to experience and grow as a programmer through my career as a student in this program. 
 </p>
 <br /><br />
-<h4>Milestone Three – Algorithms and Data Structures</h4>
+<h4>Milestone Five – Databases</h4>
 <p>
-  	
+  	In this module, I will discuss the architecture of my application, as it relates to its use of storing and accessing data in a database. I will then discuss the modifications I have made to the application, and the benefits my updates will yield to the performance and overall security of my software. The artifact that I have selected for this capstone is a Web Application that I have built using Microsoft’s ASP.Net Framework, following the MVC model as the design pattern, and using C# as the programming language. I have selected this artifact, because I believe that web applications are an amalgam of many aspects of computer science and are a perfect solution to demonstrate how everything I have learned in my Computer Science program comes together. 
+</p>
+<p>
+  	The basic purpose behind my web application is to allow the user to store and retrieve information about the user’s collectible toy inventory to simplify what used to be a very manual process for the user for whom I created it. Therefore, since this is a data-driven web application, a database back-end is necessary. For this, I have opted to implement an ORM solution, specifically Entity Framework, that points to a database powered by Microsoft’s SQL Server, which are both also Microsoft technologies. I chose Entity Framework, because it plays well with other technologies in the Microsoft software development ecosystem, and because it allows me to take a ‘Code-First’ approach when architecting the application. Since I was the only person writing the application, being able to take a code-first approach saved me a lot of time, and I was able to focus more on writing code, and less on direct database management. 
+</p>
+<p>
+  	One modification that I will be making in this exercise, is I will define constraints for the data types within the database through my object models that are used by the ORM to create my database tables and columns. An important lesson I have learned through my courses here in this program, is that it is important to be cognizant about data types and their length, as it can have significant performance implications on the application. For instance, currently, my models that the ORM uses create the data tables, only take into consideration the object’s native type in C#, and consequently for cases such as ‘string’ types, create a data type in the database that is typed as ‘nvarchar’ with the length of ‘MAX’. The issue with using the ‘MAX’ length setting in this case may obstruct the use of indexers on the table, as well as potentially impact performance, if the table contains a lot of data. See screenshots below of the object model and respective table the ORM creates in the database. 
+</p>
+<p>
+  	To remedy this issue, I have explicitly added attributes to the properties of the object class that generates the table, to limit the character length of each column. This would be critical in cases where there are millions of records in the database, and the user often performs searches against text in the table. Please see changes demonstrated in the screenshot of the file diff below
+</p>
+<p>
+  	The updated table definition is demonstrated in the screenshot below:
+</p>
+<p>
+  	Overall, I believe my changes will make the application more scalable and performant if there is ever a need for it to support databases with millions of records, and conserve computing resources on the DB server. 
+</p>
+<p>
+  	With this artifact, I was able to demonstrate my awareness of good database design principles and adhere to these practices, even through a code-first approach to software development. One challenge I faced is figuring out how to influence the data types in my table through the use of an ORM. Although it was a challenge, I was able to overcome it with some research and persistence. Through my time as a student in the Computer Science program, I was able to develop more resourcefulness when it comes to finding solutions for complex technical problems. I am glad I was able to apply my new skills experientially in this capstone.
 </p>
