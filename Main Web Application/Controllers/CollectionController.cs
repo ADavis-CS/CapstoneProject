@@ -24,46 +24,70 @@ namespace Main_Web_Application.Controllers
         [Route("~/Collection/List")]
         public ActionResult List(string sortBy = null, string searchString = null)
         {
+            //Defining the list that will be returned
+            List <CollectionObject> lstCollectionObjectsToReturn;
+
+            //When the searcString parameter is not empty, return a matching object list by search string
             if (!String.IsNullOrWhiteSpace(Server.HtmlEncode(searchString)))
             {
-                return View("~/Views/Inventory/ListObjects.cshtml",
-                    Context.CollectionObjects
-                    .Where(x => x.Name.ToLower().Contains(searchString.ToLower()) || x.Description.ToLower().Contains(searchString.ToLower()))
+                //Retrieve Collection Objects by search string
+                lstCollectionObjectsToReturn = Context.CollectionObjects
+                    .Where(x => x.Name.ToLower()
+                    .Contains(searchString.ToLower()) || x.Description.ToLower().Contains(searchString.ToLower()))
                     .OrderByDescending(x => x.Id)
-                    .ToList());
+                    .ToList();
+
+                return View("~/Views/Inventory/ListObjects.cshtml", lstCollectionObjectsToReturn);
             }
 
+            //When the sort parameter is supplied, generate a list of objects that is sorted by the parameter value
             if (sortBy != null)
             {
                 switch (sortBy.ToLower())
                 {
                     case "name":
-                        return View("~/Views/Inventory/ListObjects.cshtml", Context.CollectionObjects.OrderBy(x => x.Name).ToList());
+                        lstCollectionObjectsToReturn = Context.CollectionObjects.OrderBy(x => x.Name).ToList();
+                        break;
                     case "hasbox":
-                        return View("~/Views/Inventory/ListObjects.cshtml", Context.CollectionObjects.OrderByDescending(x => x.HasBox).ToList());
+                        lstCollectionObjectsToReturn = Context.CollectionObjects.OrderByDescending(x => x.HasBox).ToList();
+                        break;
                     case "hasshipper":
-                        return View("~/Views/Inventory/ListObjects.cshtml", Context.CollectionObjects.OrderByDescending(x => x.HasShipper).ToList());
+                        lstCollectionObjectsToReturn = Context.CollectionObjects.OrderByDescending(x => x.HasShipper).ToList();
+                        break;
                     case "condition":
-                        return View("~/Views/Inventory/ListObjects.cshtml", Context.CollectionObjects.OrderBy(x => x.Condition).ToList());
+                        lstCollectionObjectsToReturn = Context.CollectionObjects.OrderBy(x => x.Condition).ToList();
+                        break;
                     case "manufacturer":
-                        return View("~/Views/Inventory/ListObjects.cshtml", Context.CollectionObjects.OrderBy(x => x.Manufacturer).ToList());
+                        lstCollectionObjectsToReturn = Context.CollectionObjects.OrderBy(x => x.Manufacturer).ToList();
+                        break;
                     case "genre":
-                        return View("~/Views/Inventory/ListObjects.cshtml", Context.CollectionObjects.OrderBy(x => x.Genre).ToList());
+                        lstCollectionObjectsToReturn = Context.CollectionObjects.OrderBy(x => x.Genre).ToList();
+                        break;
                     case "type":
-                        return View("~/Views/Inventory/ListObjects.cshtml", Context.CollectionObjects.OrderBy(x => x.Type).ToList());
+                        lstCollectionObjectsToReturn = Context.CollectionObjects.OrderBy(x => x.Type).ToList();
+                        break;
                     case "value":
-                        return View("~/Views/Inventory/ListObjects.cshtml", Context.CollectionObjects.OrderByDescending(x => x.EstimatedValue).ToList());
+                        lstCollectionObjectsToReturn = Context.CollectionObjects.OrderByDescending(x => x.EstimatedValue).ToList();
+                        break;
                     case "sold":
-                        return View("~/Views/Inventory/ListObjects.cshtml", Context.CollectionObjects.OrderByDescending(x => x.Sold).ToList());
+                        lstCollectionObjectsToReturn = Context.CollectionObjects.OrderByDescending(x => x.Sold).ToList();
+                        break;
                     case "shipped":
-                        return View("~/Views/Inventory/ListObjects.cshtml", Context.CollectionObjects.OrderByDescending(x => x.DateShipped).ToList());
+                        lstCollectionObjectsToReturn = Context.CollectionObjects.OrderByDescending(x => x.DateShipped).ToList();
+                        break;
                     default:
-                        return View("~/Views/Inventory/ListObjects.cshtml", Context.CollectionObjects.OrderByDescending(x => x.DateUpdated).ToList());
+                        lstCollectionObjectsToReturn = Context.CollectionObjects.OrderByDescending(x => x.DateUpdated).ToList();
+                        break;
                 }
+
+                return View("~/Views/Inventory/ListObjects.cshtml", lstCollectionObjectsToReturn);
             }
             else
             {
-                return View("~/Views/Inventory/ListObjects.cshtml", Context.CollectionObjects.OrderByDescending(x => x.DateUpdated).ToList());
+                //This is the default behavior - returns a list of objects sorted by the date on which the object was last updated, in descending order. 
+                lstCollectionObjectsToReturn = Context.CollectionObjects.OrderByDescending(x => x.DateUpdated).ToList();
+
+                return View("~/Views/Inventory/ListObjects.cshtml", lstCollectionObjectsToReturn);
             }
         }
 
@@ -108,34 +132,40 @@ namespace Main_Web_Application.Controllers
         [Route("~/Collection/Edit/{id:int}")]
         public ActionResult Edit(CollectionObject model)
         {
+            //If the model supplied is invalid, return the user back to the edit page
+            if(!ModelState.IsValid)
+            { 
+                return View(model);
+            }
 
-            CollectionObject item = new CollectionObject();
-            item = Context.CollectionObjects.Find(model.Id);
-            item.HasBox = model.HasBox;
-            item.Genre = model.Genre;
-            item.Condition = model.Condition;
-            item.Description = model.Description;
-            item.HasShipper = model.HasShipper;
-            item.Manufacturer = model.Manufacturer;
-            item.Name = model.Name;
-            item.Type = model.Type;
-            item.Sold = model.Sold;
-            item.EstimatedValue = model.EstimatedValue;
-            item.SoldValue = model.SoldValue;
-            item.BuyerName = model.BuyerName;
-            item.BuyerAddress = model.BuyerAddress;
-            item.DateShipped = model.DateShipped;
-            item.BuyerComments = model.BuyerComments;
+            //using a new collection object, rather than the model object to avert overposting security vulnerability. 
+            CollectionObject collectionObject = new CollectionObject();
+            collectionObject = Context.CollectionObjects.Find(model.Id);
+            collectionObject.HasBox = model.HasBox;
+            collectionObject.Genre = model.Genre;
+            collectionObject.Condition = model.Condition;
+            collectionObject.Description = model.Description;
+            collectionObject.HasShipper = model.HasShipper;
+            collectionObject.Manufacturer = model.Manufacturer;
+            collectionObject.Name = model.Name;
+            collectionObject.Type = model.Type;
+            collectionObject.Sold = model.Sold;
+            collectionObject.EstimatedValue = model.EstimatedValue;
+            collectionObject.SoldValue = model.SoldValue;
+            collectionObject.BuyerName = model.BuyerName;
+            collectionObject.BuyerAddress = model.BuyerAddress;
+            collectionObject.DateShipped = model.DateShipped;
+            collectionObject.BuyerComments = model.BuyerComments;
 
             if (User.IsInRole("Admin"))
             {
-                item.CommissionPaid = model.CommissionPaid;
-                item.CommissionDate = model.CommissionDate;
-                item.CommissionComments = model.CommissionComments;
+                collectionObject.CommissionPaid = model.CommissionPaid;
+                collectionObject.CommissionDate = model.CommissionDate;
+                collectionObject.CommissionComments = model.CommissionComments;
             }
 
-            item.DateUpdated = DateTime.Now;
-            Context.Entry(item).State = EntityState.Modified;
+            collectionObject.DateUpdated = DateTime.Now;
+            Context.Entry(collectionObject).State = EntityState.Modified;
             Context.SaveChanges();
 
             ViewBag.EditSuccess = true;
@@ -169,7 +199,15 @@ namespace Main_Web_Application.Controllers
 
                         string _FileName = Path.GetFileName(file.FileName);
                         string _path = Path.Combine(Server.MapPath("~/temp_images"), $"{image.Id}_{_FileName}");
-                        file.SaveAs(_path);
+
+                        //a check to determine if the file already exists before saving it into the directory
+                        if (!System.IO.File.Exists(_path))
+                        {
+                            file.SaveAs(_path);
+                        }
+                        else
+                            throw new Exception("A file already exists in this directory, cannot create a new file with the same name!");
+
 
 
                         var imageSecond = colObject.Images.Where(x => x.Id == image.Id).FirstOrDefault();

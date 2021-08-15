@@ -80,7 +80,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var item in Model.ItemManufacturerBreakdown.Values.Distinct().ToList())
+                    @foreach (var item in Model.ItemManufacturerBreakdown.Values.Distinct().ToArray())
                     {
                         <tr>
                             <td>@item.ToString()</td>
@@ -103,7 +103,7 @@
                 </thead>
                 <tbody>
 
-                    @foreach (var item in Model.ItemGenreBreakdown.Values.Distinct().ToList())
+                    @foreach (var item in Model.ItemGenreBreakdown.Values.Distinct().ToArray())
                     {
                         <tr>
                             <td>@item.ToString()</td>
@@ -125,7 +125,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var item in Model.ItemConditionBreakdown.Values.Distinct().ToList())
+                    @foreach (var item in Model.ItemConditionBreakdown.Values.Distinct().ToArray())
                     {
                         <tr>
                             <td>@item.ToString()</td>
@@ -147,7 +147,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var item in Model.ItemTypeBreakdown.Values.Distinct().ToList())
+                    @foreach (var item in Model.ItemTypeBreakdown.Values.Distinct().ToArray())
                     {
                         <tr>
                             <td>@item.ToString()</td>

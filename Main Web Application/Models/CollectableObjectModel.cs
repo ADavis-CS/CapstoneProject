@@ -81,10 +81,12 @@ namespace Main_Web_Application.Models
         #region Buyer Information
 
         [Display(Name = "Buyer's Name")]
+        [StringLength(30)]
         public string BuyerName { get; set; }
 
         [Display(Name = "Buyer's Address")]
         [DataType(DataType.MultilineText)]
+        [StringLength(250)]
         public string BuyerAddress { get; set; }
 
         [Display(Name = "Date Shipped")]
@@ -94,6 +96,7 @@ namespace Main_Web_Application.Models
 
         [Display(Name = "Buyer Comments")]
         [DataType(DataType.MultilineText)]
+        [StringLength(3000)]
         public string BuyerComments { get; set; }
 
         #endregion

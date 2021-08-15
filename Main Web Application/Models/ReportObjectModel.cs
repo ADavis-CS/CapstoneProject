@@ -47,7 +47,7 @@ namespace Main_Web_Application.Models
         public List<CollectionItemIdAndName> ItemsWithoutImages { get; set; }
     }
 
-    public class CollectionItemIdAndName
+    public struct CollectionItemIdAndName
     {
         public int Id { get; set; }
 
